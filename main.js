@@ -8,7 +8,21 @@ const btnAdd = document.querySelector('#agregar-tarea')
 //Creo una variable donde guardo el texto que se introduce en el input
 const input =  document.querySelector('#tarea-introducida')
 
+//Creo una variable donde guardo el array de tareas
 const tareas = []
+
+//Comprobamos si existe el array de tareas en la bd local
+if(localStorage.getItem('tareas')) {
+  //Extraemos el array de tareas de la bd local
+  const tareas = JSON.parse(localStorage.getItem('tareas'));
+
+
+  tareas.forEach(tarea => {
+    
+    addTareasFunction(tarea);
+  });
+}
+
 
 //Al boton le añado un evento de click y una función anonima
 btnAdd.addEventListener('click', addTask);
@@ -42,20 +56,18 @@ function addTask() {
 
   }
   else { 
+  
     //Añado la tarea a la lista
     addTareasFunction(textoAdd);
+    saveTask(tareas);
   }
 
-
-
 }
-
-
 
 function addTareasFunction(textoAdd) {
   //Añado la tarea a la lista
   tareas.push(textoAdd);
-  saveTask(tareas);
+
   //Muestro la tarea en la consola
   console.log("Tarea añadida: " + tareas);
 
