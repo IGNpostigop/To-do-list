@@ -2,8 +2,10 @@ import './style.css'
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 
-//Creo una variable donde guardo el boton que lo busco con el querySelector pasandole # para id y . para class
+
 const btnAdd = document.querySelector('#agregar-tarea')
+const btnBorrar = document.querySelector('#borrar-tarea')
+const btnBorrarTodo = document.querySelector('#borrar-todo')
 
 //Creo una variable donde guardo el texto que se introduce en el input
 const input =  document.querySelector('#tarea-introducida')
@@ -26,6 +28,11 @@ input.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     addTask();
   }
+});
+
+btnBorrarTodo.addEventListener('click', () => {
+  localStorage.clear();
+  location.reload();
 });
 
 
@@ -86,6 +93,7 @@ function insertTask(tarea) {
     console.log("Tarea añadida: " + tareas);
 
     //Creo una variable donde guardo el elemento li, label y br (cada elemento concreto)
+    const divCaja = document.createElement('div')
     const checkBox = document.createElement('input')
     const label = document.createElement('label')
     const br = document.createElement('br')
@@ -96,11 +104,13 @@ function insertTask(tarea) {
     label.setAttribute('for', 'checkbox_' + tarea); 
  
     //Añado la tarea a la lista (era un input)
-    listaTareas.appendChild(checkBox)
+    divCaja.appendChild(checkBox)
     //Añado el label a la lista
-    listaTareas.appendChild(label)
+    divCaja.appendChild(label)
     //Añado un salto de linea a la lista
-    listaTareas.appendChild(br);
+    divCaja.appendChild(br);
+    //Añado la caja a la lista
+    listaTareas.appendChild(divCaja);
       Toastify({
         text: "Tarea añadida",
         duration: 3000,
@@ -125,7 +135,7 @@ function insertTask(tarea) {
 
   function recoveryTasks(tarea) {
 
-    
+    const divCaja = document.createElement('div');
     const checkBox = document.createElement('input');
     const label = document.createElement('label');
     const br = document.createElement('br');
@@ -136,9 +146,10 @@ function insertTask(tarea) {
     label.textContent = tarea.nombre;
     label.setAttribute('for', 'checkbox_' + tarea); // Establece la asociación usando el atributo "for"
   
-    listaTareas.appendChild(checkBox);
-    listaTareas.appendChild(label);
-    listaTareas.appendChild(br);
+    divCaja.appendChild(checkBox);
+    divCaja.appendChild(label);
+    divCaja.appendChild(br);
+    listaTareas.appendChild(divCaja);
 
     //Control del checked
     checkBox.addEventListener('change', () => {
