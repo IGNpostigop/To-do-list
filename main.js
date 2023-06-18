@@ -12,7 +12,7 @@ const input =  document.querySelector('#tarea-introducida')
 const listaTareas = document.querySelector('#lista-tareas')
 
 //Creo una variable donde guardo el array de tareas
-const tareas = []
+const tareas = JSON.parse(localStorage.getItem('tareas'));
 
 //Al boton le añado un evento de click y una función anonima
 btnAdd.addEventListener('click', addTask);
@@ -25,18 +25,12 @@ input.addEventListener('keypress', (e) => {
 });
 
 //Comprobamos si existe el array de tareas en la bd local
-if(localStorage.getItem('tareas')) {
-  //Extraemos el array de tareas de la bd local
-  const tareas = JSON.parse(localStorage.getItem('tareas'));
-  
-  if(tareas!==null){
+if(tareas!==null){
     
-    tareas.forEach(tarea => {
-        recoveryTasks(tarea);
-    });
+  tareas.forEach(tarea => {
+      recoveryTasks(tarea);
+  });
   }
-
-}
 
 function addTask() {
 
