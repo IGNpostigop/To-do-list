@@ -8,21 +8,11 @@ const btnAdd = document.querySelector('#agregar-tarea')
 //Creo una variable donde guardo el texto que se introduce en el input
 const input =  document.querySelector('#tarea-introducida')
 
+//Creo una variable donde guardo el elemento que representa a la lista
+const listaTareas = document.querySelector('#lista-tareas')
+
 //Creo una variable donde guardo el array de tareas
 const tareas = []
-
-//Comprobamos si existe el array de tareas en la bd local
-if(localStorage.getItem('tareas')) {
-  //Extraemos el array de tareas de la bd local
-  const tareas = JSON.parse(localStorage.getItem('tareas'));
-
-
-  tareas.forEach(tarea => {
-    
-    addTareasFunction(tarea);
-  });
-}
-
 
 //Al boton le añado un evento de click y una función anonima
 btnAdd.addEventListener('click', addTask);
@@ -34,13 +24,26 @@ input.addEventListener('keypress', (e) => {
   }
 });
 
+//Comprobamos si existe el array de tareas en la bd local
+if(localStorage.getItem('tareas')) {
+  //Extraemos el array de tareas de la bd local
+  const tareas = JSON.parse(localStorage.getItem('tareas'));
+  
+  if(tareas!==null){
+    
+    tareas.forEach(tarea => {
+        recoveryTasks(tarea);
+    });
+  }
+
+}
+
 function addTask() {
 
+  const tarea = input.value.trim(); //Para que no me añada espacios en blanco
+  input.value = ""; //Refresco la barra a vacio
 
-  const textoAdd = input.value.trim();
-  input.value = "";
-
-  if (textoAdd === "") {
+  if (tarea === "") {
     //Muestro un mensaje de error en rojo gradiente
 
     Toastify({
@@ -52,57 +55,80 @@ function addTask() {
       }
     }).showToast();
 
-   
-
+  }
+  else if(tareas.includes(tarea)) {
+    Toastify({
+      text: "La tarea ya existe",
+      duration: 3000,
+      style:
+      {
+        background: "linear-gradient(to right, #f9d423, #ff4e50)",
+      }
+    }).showToast();
   }
   else { 
-  
     //Añado la tarea a la lista
-    addTareasFunction(textoAdd);
-    saveTask(tareas);
+    insertTask(tarea);
   }
 
 }
 
-function addTareasFunction(textoAdd) {
-  //Añado la tarea a la lista
-  tareas.push(textoAdd);
 
-  //Muestro la tarea en la consola
-  console.log("Tarea añadida: " + tareas);
+function insertTask(tarea) {
+    //Añado la tarea a la lista
+    tareas.push(tarea);
+    //Añado la tarea a la bd local
+    localStorage.setItem('tareas', JSON.stringify(tareas + tarea));
 
-  //Creo una variable donde guardo el elemento que representa a la lista
-  const listaTareas = document.querySelector('#lista-tareas')
+    //Muestro la tarea en la consola
+    console.log("Tarea añadida: " + tareas);
 
-  //Creo una variable donde guardo el elemento li, label y br (cada elemento concreto)
-  const tarea = document.createElement('input')
-  const label = document.createElement('label')
-  const br = document.createElement('br')
+    //Creo una variable donde guardo el elemento li, label y br (cada elemento concreto)
+    const checkBox = document.createElement('input')
+    const label = document.createElement('label')
+    const br = document.createElement('br')
 
-  //creo un checkbox
-  tarea.type = "checkbox"
+    checkBox.type = 'checkbox';
+    checkBox.id = 'checkbox_' + tarea; // Asigna un ID único al checkbox
+    label.textContent = tarea; //añado el texto al checkbox mediante un label
+    label.setAttribute('for', 'checkbox_' + tarea); 
+ 
+    //Añado la tarea a la lista (era un input)
+    listaTareas.appendChild(checkBox)
+    //Añado el label a la lista
+    listaTareas.appendChild(label)
+    //Añado un salto de linea a la lista
+    listaTareas.appendChild(br);
+      Toastify({
+        text: "Tarea añadida",
+        duration: 3000,
+        style:
+        {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+
+    //Guardar tarea en la bd local
+    localStorage.setItem('tareas', JSON.stringify(tareas));
+
+}
+
+
+
+  function recoveryTasks(tarea) {
+    const checkBox = document.createElement('input');
+    const label = document.createElement('label');
+    const br = document.createElement('br');
+        
+    checkBox.type = 'checkbox';
+    checkBox.id = 'checkbox_' + tarea; // Asigna un ID único al checkbox
+    label.textContent = tarea;
+    label.setAttribute('for', 'checkbox_' + tarea); // Establece la asociación usando el atributo "for"
   
-  //añado eel texto al checkbox mediante un label
-  label.textContent = textoAdd
-
-  //Añado la tarea a la lista (era un input)
-  listaTareas.appendChild(tarea)
-  //Añado el label a la lista
-  listaTareas.appendChild(label)
-  //Añado un salto de linea a la lista
-  listaTareas.appendChild(br);
-  Toastify({
-    text: "Tarea añadida",
-    duration: 3000,
-    style:
-    {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    }
-  }).showToast();
-
-}
+    listaTareas.appendChild(checkBox);
+    listaTareas.appendChild(label);
+    listaTareas.appendChild(br);
+  }
 
 
-function saveTask(tareas) {
-  localStorage.setItem('tareas', JSON.stringify(tareas));
-}
+
