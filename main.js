@@ -12,7 +12,7 @@ const input =  document.querySelector('#tarea-introducida')
 const listaTareas = document.querySelector('#lista-tareas')
 
 //Creo una variable donde guardo el array de tareas
-const tareas = JSON.parse(localStorage.getItem('tareas'));
+let tareas = JSON.parse(localStorage.getItem('tareas'));
 if(tareas===null){
   tareas = [];
 }
