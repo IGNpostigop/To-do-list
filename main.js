@@ -13,7 +13,9 @@ const listaTareas = document.querySelector('#lista-tareas')
 
 //Creo una variable donde guardo el array de tareas
 const tareas = JSON.parse(localStorage.getItem('tareas'));
-
+if(tareas===null){
+  tareas = [];
+}
 //Al boton le añado un evento de click y una función anonima
 btnAdd.addEventListener('click', addTask);
 //al enter le añado un evento de click y una función anonima
