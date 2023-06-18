@@ -9,7 +9,7 @@
 - [x] Hacer que la web detecte tanto el click en el boton como el enter.
 - [x] Guardar las tareas en bd local.
 - [x] Mantener los datos de la bd local como elementos activos.   
-- [ ] Mantener el "tick".
+- [x] Mantener el "tick".
 - [ ] Eliminar tarea. (Mirando el padre del boton borrar)
 - [ ] Modificar tarea.
 - [ ] Añadir boton "Finalizada" (line through)
