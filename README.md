@@ -24,3 +24,5 @@ __Alternativas__
 * Añadir imagenes.
 * Añadir fecha límite.
 * Añadir prioridad con colores. (3 niveles)
+* Añadir backend.
+* Cambiar BD a MongoDB.
