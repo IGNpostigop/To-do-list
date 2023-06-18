@@ -16,9 +16,11 @@ let tareas = JSON.parse(localStorage.getItem('tareas'));
 if(tareas===null){
   tareas = [];
 }
-//Al boton le añado un evento de click y una función anonima
+
+//-----------------EVENTOS-----------------//
+
 btnAdd.addEventListener('click', addTask);
-//al enter le añado un evento de click y una función anonima
+//----------------------------------------//
 input.addEventListener('keypress', (e) => {
   console.log(e.key);
   if (e.key === 'Enter') {
@@ -26,10 +28,13 @@ input.addEventListener('keypress', (e) => {
   }
 });
 
+
+
 //Comprobamos si existe el array de tareas en la bd local
 if(tareas!==null){
-    
+  
   tareas.forEach(tarea => {
+    
       recoveryTasks(tarea);
   });
   }
@@ -52,7 +57,7 @@ function addTask() {
     }).showToast();
 
   }
-  else if(tareas.includes(tarea)) {
+  else if(tareas.find(t => t.nombre === tarea)) {
     Toastify({
       text: "La tarea ya existe",
       duration: 3000,
@@ -72,9 +77,10 @@ function addTask() {
 
 function insertTask(tarea) {
     //Añado la tarea a la lista
-    tareas.push(tarea);
+    const nuevaTarea = { nombre: tarea, realizada: false };
+    tareas.push(nuevaTarea);
     //Añado la tarea a la bd local
-    localStorage.setItem('tareas', JSON.stringify(tareas + tarea));
+    localStorage.setItem('tareas', JSON.stringify(tareas));
 
     //Muestro la tarea en la consola
     console.log("Tarea añadida: " + tareas);
@@ -107,23 +113,42 @@ function insertTask(tarea) {
     //Guardar tarea en la bd local
     localStorage.setItem('tareas', JSON.stringify(tareas));
 
+    //Control del checked
+    checkBox.addEventListener('change', () => {
+      const tareaIndex = tareas.findIndex(t => t.nombre === tarea);
+      tareas[tareaIndex].realizada = checkBox.checked;
+      localStorage.setItem('tareas', JSON.stringify(tareas));
+    });
 }
 
 
 
   function recoveryTasks(tarea) {
+
+    
     const checkBox = document.createElement('input');
     const label = document.createElement('label');
     const br = document.createElement('br');
         
     checkBox.type = 'checkbox';
-    checkBox.id = 'checkbox_' + tarea; // Asigna un ID único al checkbox
-    label.textContent = tarea;
+    checkBox.id = 'checkbox_' + tarea.nombre; // Asigna un ID único al checkbox
+    checkBox.checked = tarea.realizada;
+    label.textContent = tarea.nombre;
     label.setAttribute('for', 'checkbox_' + tarea); // Establece la asociación usando el atributo "for"
   
     listaTareas.appendChild(checkBox);
     listaTareas.appendChild(label);
     listaTareas.appendChild(br);
+
+    //Control del checked
+    checkBox.addEventListener('change', () => {
+      const tareaIndex = tareas.findIndex(t => t.nombre === tarea.nombre);
+      if (tareaIndex !== -1) {
+        tareas[tareaIndex].realizada = checkBox.checked;
+        localStorage.setItem('tareas', JSON.stringify(tareas));
+      }
+    });
+    
   }
 
 
