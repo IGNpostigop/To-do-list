@@ -1,25 +1,45 @@
 #lista-general {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .botones {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .texto-agregar {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-.boton-borrarTODO button {
-  font-weight: bold;
+:root {
+  font-size: 1.2rem;
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.texto-agregar {
+  display: flex;
+  align-items: baseline;
+}
+
+#lista-tareas {
+  overflow: auto;
+}
+
+.content {
+  display: flex;
+}
+
+.borrarX {
+  font-size: 1.2rem;
+  margin: 10px;
+  padding: 0px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(to right, #ff416c, #ff4b2b);
-  color: white;
+  background-color: transparent;
+  color: red;
+  transition: all 0.3s ease;
+}
+
+.borrarX:hover {
+  cursor: pointer;
+  transform: scale(1.5);
 }

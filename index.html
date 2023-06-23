@@ -4,26 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To do list</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
   </head>
   <body>
     <h1>To do list</h1>
 
     <div id="lista-general">
-      <h2 id="titulo-de-la-lista">Lista de tareas</h2>
-      <div class="botones">
-        <div class="texto-agregar">
-          <input id="tarea-introducida" />
-          <button id="agregar-tarea">Añadir tarea</button>
+        <h2 id="titulo-de-la-lista">Lista de tareas</h2>
+        <div class="content">
+          <div style="width: 500px;">
+              <input id="tarea-introducida" />
+              <div id="lista-tareas"></div>
+          
+          </div>
+          <aside class="botones">
+            <button id="agregar-tarea">Añadir tarea</button>
+            <button id="borrar-todo">Borrar TODO</button>
+          </aside>
         </div>
-        <div class="boton-borrar">
-          <button id="borrar-tareas">Borrar tarea</button>
-        </div>
-        <div class="boton-borrarTODO">
-          <button id="borrar-todo">Borrar TODO</button>
-        </div>
-      </div>
-      <div id="lista-tareas"></div>
     </div>
 
 

@@ -4,14 +4,13 @@ import "toastify-js/src/toastify.css"
 
 
 const btnAdd = document.querySelector('#agregar-tarea')
-const btnBorrar = document.querySelector('#borrar-tarea')
 const btnBorrarTodo = document.querySelector('#borrar-todo')
 
 //Creo una variable donde guardo el texto que se introduce en el input
 const input =  document.querySelector('#tarea-introducida')
 
 //Creo una variable donde guardo el elemento que representa a la lista
-const listaTareas = document.querySelector('#lista-tareas')
+let listaTareas = document.querySelector('#lista-tareas')
 
 //Creo una variable donde guardo el array de tareas
 let tareas = JSON.parse(localStorage.getItem('tareas'));
@@ -97,16 +96,21 @@ function insertTask(tarea) {
     const checkBox = document.createElement('input')
     const label = document.createElement('label')
     const br = document.createElement('br')
+    const borrar = document.createElement('button');
 
     checkBox.type = 'checkbox';
     checkBox.id = 'checkbox_' + tarea; // Asigna un ID único al checkbox
     label.textContent = tarea; //añado el texto al checkbox mediante un label
     label.setAttribute('for', 'checkbox_' + tarea); 
+    borrar.textContent = 'x';
+    borrar.classList.add('borrarX');
  
     //Añado la tarea a la lista (era un input)
     divCaja.appendChild(checkBox)
     //Añado el label a la lista
     divCaja.appendChild(label)
+    //Añado el boton borrar a la lista
+    divCaja.appendChild(borrar);
     //Añado un salto de linea a la lista
     divCaja.appendChild(br);
     //Añado la caja a la lista
@@ -129,6 +133,11 @@ function insertTask(tarea) {
       tareas[tareaIndex].realizada = checkBox.checked;
       localStorage.setItem('tareas', JSON.stringify(tareas));
     });
+
+    //Control del boton borrar
+    borrar.addEventListener('click', () => {
+      deleteTask(tarea);
+    });
 }
 
 
@@ -139,15 +148,19 @@ function insertTask(tarea) {
     const checkBox = document.createElement('input');
     const label = document.createElement('label');
     const br = document.createElement('br');
+    const borrar = document.createElement('button');
         
     checkBox.type = 'checkbox';
     checkBox.id = 'checkbox_' + tarea.nombre; // Asigna un ID único al checkbox
     checkBox.checked = tarea.realizada;
     label.textContent = tarea.nombre;
     label.setAttribute('for', 'checkbox_' + tarea); // Establece la asociación usando el atributo "for"
-  
+    borrar.textContent = 'x';
+    borrar.classList.add('borrarX');
+
     divCaja.appendChild(checkBox);
     divCaja.appendChild(label);
+    divCaja.appendChild(borrar);
     divCaja.appendChild(br);
     listaTareas.appendChild(divCaja);
 
@@ -159,8 +172,16 @@ function insertTask(tarea) {
         localStorage.setItem('tareas', JSON.stringify(tareas));
       }
     });
+
+     //Control del boton borrar
+     borrar.addEventListener('click', () => {
+      deleteTask(tarea);
+    });
     
   }
 
+  function deleteTask(tarea) {
+   
+  }
 
 
