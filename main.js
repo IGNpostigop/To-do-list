@@ -1,37 +1,10 @@
 import './style.css';
-import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
+import Toastify from 'toastify-js';
+import { listaTareas, tareas } from './constants';
+import { setUpEvents } from './events';
 
-const btnAdd = document.querySelector('#agregar-tarea');
-const btnBorrarTodo = document.querySelector('#borrar-todo');
-
-// Creo una variable donde guardo el texto que se introduce en el input
-const input = document.querySelector('#tarea-introducida');
-
-// Creo una variable donde guardo el elemento que representa a la lista
-const listaTareas = document.querySelector('#lista-tareas');
-
-// Creo una variable donde guardo el array de tareas
-let tareas = JSON.parse(localStorage.getItem('tareas'));
-if (tareas === null) {
-  tareas = [];
-}
-
-// -----------------EVENTOS-----------------//
-
-btnAdd.addEventListener('click', addTask);
-// ----------------------------------------//
-input.addEventListener('keypress', (e) => {
-  console.log(e.key);
-  if (e.key === 'Enter') {
-    addTask();
-  }
-});
-
-btnBorrarTodo.addEventListener('click', () => {
-  localStorage.clear();
-  location.reload();
-});
+setUpEvents();
 
 // Comprobamos si existe el array de tareas en la bd local
 if (tareas !== null) {
@@ -40,37 +13,7 @@ if (tareas !== null) {
   });
 }
 
-function addTask () {
-  const tarea = input.value.trim(); // Para que no me añada espacios en blanco
-  input.value = ''; // Refresco la barra a vacio
-
-  if (tarea === '') {
-    // Muestro un mensaje de error en rojo gradiente
-
-    Toastify({
-      text: 'La tarea no puede estar vacía',
-      duration: 3000,
-      style:
-      {
-        background: 'linear-gradient(to right, #ff416c, #ff4b2b)'
-      }
-    }).showToast();
-  } else if (tareas.find(t => t.nombre === tarea)) {
-    Toastify({
-      text: 'La tarea ya existe',
-      duration: 3000,
-      style:
-      {
-        background: 'linear-gradient(to right, #f9d423, #ff4e50)'
-      }
-    }).showToast();
-  } else {
-    // Añado la tarea a la lista
-    insertTask(tarea);
-  }
-}
-
-function insertTask (tarea) {
+export function insertTask (tarea) {
   // Añado la tarea a la lista
   const nuevaTarea = { nombre: tarea, realizada: false };
   tareas.push(nuevaTarea);
