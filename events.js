@@ -1,5 +1,5 @@
-import Toastify from 'toastify-js';
 import { btnAdd, btnBorrarTodo, input, tareas } from './constants';
+import { showNotification } from './helpers';
 import { insertTask } from './main';
 
 /* -------------------- EVENT FUNCTIONS -------------------- */
@@ -8,26 +8,14 @@ const addTask = () => {
   const tarea = input.value.trim(); // Para que no me añada espacios en blanco
   input.value = ''; // Refresco la barra a vacio
 
-  if (tarea === '') {
-    // Muestro un mensaje de error en rojo gradiente
+  const taskIsEmtpy = tarea === '';
+  const taskAlreadyExists = tareas.find(t => t.nombre === tarea);
 
-    Toastify({
-      text: 'La tarea no puede estar vacía',
-      duration: 3000,
-      style:
-      {
-        background: 'linear-gradient(to right, #ff416c, #ff4b2b)'
-      }
-    }).showToast();
-  } else if (tareas.find(t => t.nombre === tarea)) {
-    Toastify({
-      text: 'La tarea ya existe',
-      duration: 3000,
-      style:
-      {
-        background: 'linear-gradient(to right, #f9d423, #ff4e50)'
-      }
-    }).showToast();
+  if (taskIsEmtpy) {
+    // Muestro un mensaje de error en rojo gradiente
+    showNotification('La tarea no puede estar vacía', { background: 'linear-gradient(to right, #ff416c, #ff4b2b)' });
+  } else if (taskAlreadyExists) {
+    showNotification('La tarea ya existe', { background: 'linear-gradient(to right, #f9d423, #ff4e50)' });
   } else {
     // Añado la tarea a la lista
     insertTask(tarea);
