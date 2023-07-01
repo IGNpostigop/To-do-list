@@ -51,12 +51,14 @@ export function insertTask (tarea) {
   // Guardar tarea en la bd local
   localStorage.setItem('tareas', JSON.stringify(tareas));
 
-  // Control del checked
-  checkBox.addEventListener('change', () => {
+  const handleChange = () => {
     const tareaIndex = tareas.findIndex(t => t.nombre === tarea);
     tareas[tareaIndex].realizada = checkBox.checked;
     localStorage.setItem('tareas', JSON.stringify(tareas));
-  });
+  };
+
+  // Control del checked
+  checkBox.addEventListener('change', handleChange);
 
   // Control del boton borrar
   borrar.addEventListener('click', () => {
