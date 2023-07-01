@@ -4,7 +4,7 @@ import { insertTask } from './main';
 
 /* -------------------- EVENT FUNCTIONS -------------------- */
 
-const addTask = () => {
+function addTask () {
   const tarea = input.value.trim(); // Para que no me añada espacios en blanco
   input.value = ''; // Refresco la barra a vacio
 
@@ -22,20 +22,20 @@ const addTask = () => {
   }
 };
 
-const handleEnterPress = (e) => {
+function handleEnterPress (e) {
   if (e.key === 'Enter') {
     addTask();
   }
 };
 
-const clearAllTasks = () => {
+function clearAllTasks () {
   localStorage.clear();
   location.reload();
 };
 
 /* -------------------- SET UP EVENTS  -------------------- */
 
-export const setUpEvents = () => {
+export function setUpEvents () {
   btnAdd.addEventListener('click', addTask);
   input.addEventListener('keypress', handleEnterPress);
   btnBorrarTodo.addEventListener('click', clearAllTasks);
