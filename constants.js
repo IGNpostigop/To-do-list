@@ -1,6 +1,6 @@
 /* -------------------- HTML ELEMENTS -------------------- */
 
-import { $, inicializateTasks } from './helpers';
+import { $, inicializateTasks } from './helpers/common';
 
 // Creo una variable donde guardo el texto que se introduce en el input
 export const input = $('#tarea-introducida');

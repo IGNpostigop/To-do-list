@@ -1,5 +1,5 @@
 import { btnAdd, btnBorrarTodo, input, tareas } from './constants';
-import { showNotification } from './helpers';
+import { showNotification } from './helpers/common';
 import { insertTask } from './main';
 
 /* -------------------- EVENT FUNCTIONS -------------------- */
