@@ -1,4 +1,4 @@
-import { btnAdd, btnBorrarTodo, input, tareas } from './constants';
+import { btnAdd, btnBorrarTodo, input, notificationsColorType, tareas } from './constants';
 import { showNotification } from './helpers/common';
 import { insertTask } from './helpers/tasks';
 
@@ -13,9 +13,9 @@ function addTask () {
 
   if (taskIsEmtpy) {
     // Muestro un mensaje de error en rojo gradiente
-    showNotification('La tarea no puede estar vacía', { background: 'linear-gradient(to right, #ff416c, #ff4b2b)' });
+    showNotification('La tarea no puede estar vacía', notificationsColorType.ERROR);
   } else if (taskAlreadyExists) {
-    showNotification('La tarea ya existe', { background: 'linear-gradient(to right, #f9d423, #ff4e50)' });
+    showNotification('La tarea ya existe', notificationsColorType.WARNING);
   } else {
     // Añado la tarea a la lista
     insertTask(tarea);

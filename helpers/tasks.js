@@ -1,4 +1,4 @@
-import { listaTareas, tareas } from '../constants';
+import { listaTareas, notificationsColorType, tareas } from '../constants';
 import { showNotification } from './common';
 
 export function inicializateTasks () {
@@ -44,9 +44,7 @@ export function insertTask (tarea) {
   // Añado la caja a la lista
   listaTareas.appendChild(divCaja);
 
-  showNotification('Tarea añadida', {
-    background: 'linear-gradient(to right, #00b09b, #96c93d)'
-  });
+  showNotification('Tarea añadida', notificationsColorType.SUCCESS);
 
   // Guardar tarea en la bd local
   localStorage.setItem('tareas', JSON.stringify(tareas));

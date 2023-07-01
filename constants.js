@@ -14,3 +14,10 @@ export const btnBorrarTodo = $('#borrar-todo');
 
 // Creo una variable donde guardo el array de tareas
 export const tareas = inicializateTasks();
+
+export const notificationsColorType = {
+  SUCCESS: 'linear-gradient(to right, #00b09b, #96c93d)',
+  WARNING: 'linear-gradient(to right, #f9d423, #ff4e50)',
+  ERROR: 'linear-gradient(to right, #ff416c, #ff4b2b)',
+  DEFAULT: ''
+};
